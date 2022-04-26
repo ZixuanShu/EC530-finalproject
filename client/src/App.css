@@ -14,6 +14,55 @@
     height: 100%;
   }
   
+  .isdoctor_button {
+      margin:2px;
+      background-color: #1338be; /* Green */
+      width: 10vw;
+      border-color: black;
+      color: white;
+      text-align: center;
+      float:left;
+      font-size: 16px;
+      border: 2px solid black;
+      height: 4vh;
+  }
+
+  .ispatient_button {
+    margin:2px;
+    background-color: #1338be; /* Green */
+    width: 10vw;
+    border-color: black;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid black;
+    height: 4vh;
+}
+
+    .profile__container{
+      border: 2px solid black; 
+      padding: 10px;
+      margin: 5px;
+      height: fit-content;
+      width:100%;
+    }
+
+   .channel-list__button{
+    margin:2px;
+    background-color: #1338be; /* Green */
+    width: 10vw;
+    border-color: black;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid black;
+    height: 4vh;
+   }
+   .isdoctor_wrapper {
+    width: 30vw;
+    overflow: hidden; /* will contain if #first is longer than #second */
+   } 
+
   .auth__form-container {
     min-height: 100vh;
     display: flex;

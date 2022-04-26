@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { ChannelList, useChatContext } from 'stream-chat-react';
 import Cookies from 'universal-cookie';
 
-import { ChannelSearch, TeamChannelList, TeamChannelPreview } from './';
+import {TeamChannelList, TeamChannelPreview } from './';
 import HospitalIcon from '../assets/hospital.png'
 import LogoutIcon from '../assets/logout.png'
 
 const cookies = new Cookies();
 
-const SideBar = ({ logout }) => (
+const SideBar = ({ logout, setViewProfile }) => (
     <div className="channel-list__sidebar">
         <div className="channel-list__sidebar__icon1">
-            <div className="icon1__inner">
+            <div className="icon1__inner" onClick ={setViewProfile}>
                 <img src={HospitalIcon} alt="Hospital" width="30" />
             </div>
         </div>
@@ -33,7 +33,7 @@ const customChannelMessagingFilter = (channels) => {
     return channels.filter((channel) => channel.type === 'messaging');
 }
 
-const ChannelListContent = ({ isCreating, setIsCreating, setCreateType, setIsEditing, setToggleContainer }) => {
+const ChannelListContent = ({ isCreating, setIsCreating, setCreateType, setIsEditing, setToggleContainer, setViewProfile }) => {
     const { client } = useChatContext();
 
     const logout = () => {
@@ -52,10 +52,9 @@ const ChannelListContent = ({ isCreating, setIsCreating, setCreateType, setIsEdi
 
     return (
         <>
-            <SideBar logout={logout} />
+            <SideBar logout={logout} setViewProfile = {setViewProfile} />
             <div className="channel-list__list__wrapper">
                 <CompanyHeader />
-                <ChannelSearch setToggleContainer={setToggleContainer} />
                 <ChannelList 
                     filters={filters}
                     channelRenderFilterFn={customChannelMessagingFilter}
@@ -85,7 +84,7 @@ const ChannelListContent = ({ isCreating, setIsCreating, setCreateType, setIsEdi
     );
 }
 
-const ChannelListContainer = ({ setCreateType, setIsCreating, setIsEditing }) => {
+const ChannelListContainer = ({ setCreateType, setIsCreating, setIsEditing, setViewProfile }) => {
     const [toggleContainer, setToggleContainer] = useState(false);
 
     return (
@@ -95,6 +94,7 @@ const ChannelListContainer = ({ setCreateType, setIsCreating, setIsEditing }) =>
                 setIsCreating={setIsCreating} 
                 setCreateType={setCreateType} 
                 setIsEditing={setIsEditing} 
+                setViewProfile = {setViewProfile}
               />
             </div>
 
@@ -108,8 +108,10 @@ const ChannelListContainer = ({ setCreateType, setIsCreating, setIsEditing }) =>
                 setCreateType={setCreateType} 
                 setIsEditing={setIsEditing}
                 setToggleContainer={setToggleContainer}
+                setViewProfile = {setViewProfile}
               />
             </div>
+
         </>
     )
 

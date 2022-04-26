@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import signinImage from '../assets/signup.jpg';
@@ -18,15 +18,27 @@ const initialState = {
 const Auth = () => {
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(true);
-    const [isDoctor, setIsDoctor] = useState('');
+    const [isDoctor, setIsDoctor] = useState(true);
     const handleChange = (e) => {
         let value = '';
-        if (e.target.name == 'isDoctor'){
+        if (e.target.name === 'isDoctor'){
             value = e.target.id
         } else {
             value = e.target.value
         }
         setForm({ ...form, [e.target.name]: value });
+    }
+
+
+    
+    const ButtonPressed = (e) =>{
+        handleChange(e)
+        if (e.target.id === 'Doctor'){
+            setIsDoctor(true);
+        }
+        if(e.target.id === 'Patient'){
+            setIsDoctor(false);
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -35,10 +47,9 @@ const Auth = () => {
         const { username, password, phoneNumber, avatarURL, isDoctor } = form;
 
         const URL = 'http://localhost:5000/auth';
-
-
+        
         const { data: { token, userId, hashedPassword, fullName } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-            username, password, fullName: form.fullName, phoneNumber, avatarURL, isDoctor
+            username, password, fullName: form.fullName, phoneNumber, avatarURL, isDoctor,
         });
 
         cookies.set('token', token);
@@ -102,13 +113,6 @@ const Auth = () => {
                         )}
                         {isSignup && (
                             <div className="auth__form-container_fields-content_input">
-                                <label htmlFor="isDoctor">Are you a doctor or a patient?</label>
-                                <button name = "isDoctor" id = "Doctor" onClick={handleChange}>Doctor</button>
-                                <button name = "isDoctor" id = "Patient" onClick={handleChange}>Patient</button>
-                            </div>
-                        )}
-                        {isSignup && (
-                            <div className="auth__form-container_fields-content_input">
                                 <label htmlFor="avatarURL">Avatar URL</label>
                                 <input 
                                     name="avatarURL" 
@@ -141,6 +145,27 @@ const Auth = () => {
                                 />
                             </div>
                             )}
+                        {isSignup && (
+                            <div className="auth__form-container_fields-content_input">
+                                <label htmlFor="isDoctor">Are you a doctor or a patient?</label>
+                                <div className="isdoctor_wrapper">
+                                <button className="isdoctor_button" 
+                                type="button"
+                                name = "isDoctor" 
+                                id = "Doctor" 
+                                onClick={ButtonPressed} 
+                                style={{backgroundColor:isDoctor===true?"#008CBA":"#1338be"}}
+                                >Doctor
+                                </button>
+                                <button className="ispatient_button" 
+                                type="button"
+                                name = "isDoctor" 
+                                id = "Patient" 
+                                onClick={ButtonPressed}
+                                style={{backgroundColor:isDoctor===true?"#1338be":"#008CBA"}}>Patient</button>
+                                </div>
+                            </div>
+                        )}
                         <div className="auth__form-container_fields-content_button">
                             <button>{isSignup ? "Sign Up" : "Sign In"}</button>
                         </div>
