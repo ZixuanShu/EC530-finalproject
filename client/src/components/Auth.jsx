@@ -1,7 +1,8 @@
 import React, { useState} from 'react';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import signinImage from '../assets/signup.jpg';
+import signinImage from '../assets/signin.jpg';
+
 
 const cookies = new Cookies();
 
@@ -73,6 +74,9 @@ const Auth = () => {
 
     return (
         <div className="auth__form-container">
+            <div className="auth__form-container_image">
+                <img src={signinImage} alt="sign in" />
+            </div>
             <div className="auth__form-container_fields">
                 <div className="auth__form-container_fields-content">
                     <p>{isSignup ? 'Sign Up' : 'Sign In'}</p>
@@ -182,9 +186,6 @@ const Auth = () => {
                         </p>
                     </div>
                 </div> 
-            </div>
-            <div className="auth__form-container_image">
-                <img src={signinImage} alt="sign in" />
             </div>
         </div>
     )
